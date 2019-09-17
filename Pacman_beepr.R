@@ -2,7 +2,7 @@
 #                             First File in R Club Git Repo                      #
 #                                                                                #
 # Run Lines 8-20 all at once to install & load beepr, install & load Rcade,      #
-# and hear the Mario sound when it ihas finished. Then line 26 to get            #
+# and hear the Mario sound when it has finished. Then line 26 to get            #
 # Pacman started                                                                 #
 ##################################################################################
 
