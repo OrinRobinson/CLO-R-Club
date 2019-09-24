@@ -9,7 +9,7 @@
 
 ### Install beepr ###
 
-install.packages(beepr)
+install.packages("beepr")
 library(beepr)
 
 ### Install devtools and rcade ###
