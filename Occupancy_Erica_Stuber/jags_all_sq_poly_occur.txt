@@ -1,0 +1,54 @@
+model {
+  SD_10 <- 1/100
+
+  # Priors for covariates of ecological model
+  alpha.0 ~ dnorm(0.0, SD_10)
+  alpha.1 ~ dnorm(0.0, SD_10)
+  alpha.2 ~ dnorm(0.0, SD_10)
+  alpha.3 ~ dnorm(0.0, SD_10)
+  alpha.4 ~ dnorm(0.0, SD_10)
+  alpha.5 ~ dnorm(0.0, SD_10)
+  alpha.6 ~ dnorm(0.0, SD_10)
+  alpha.1sq ~ dnorm(0.0, SD_10)
+  alpha.2sq ~ dnorm(0.0, SD_10)
+  alpha.3sq ~ dnorm(0.0, SD_10)
+  alpha.4sq ~ dnorm(0.0, SD_10)
+  alpha.5sq ~ dnorm(0.0, SD_10)
+  alpha.6sq ~ dnorm(0.0, SD_10)
+
+  # Priors for covariates of observation model
+  beta.0 ~ dnorm(0.0, SD_10)
+  beta.1 ~ dnorm(0.0, SD_10)
+  beta.2 ~ dnorm(0.0, SD_10)
+  beta.3 ~ dnorm(0.0, SD_10)
+  beta.4 ~ dnorm(0.0, SD_10)
+  
+  sigma.observer ~ dexp(1.0)
+  tau.observer <- 1.0 / (sigma.observer * sigma.observer)
+  
+  for (o in 1:nobservers) {
+    u.observer[o] ~ dnorm(0.0, tau.observer)
+  }
+  
+  # Ecological model
+  for (s in 1:nsites) {
+    # Ecological model
+    logit_occu[s] <- alpha.0 * abundance_covariate_year[s, 1] + alpha.1 * abundance_covariate_1_linear[s, 1] + alpha.2 * abundance_covariate_2_linear[s, 1] + alpha.3 * abundance_covariate_3_linear[s, 1] + alpha.4 * abundance_covariate_4_linear[s, 1] + alpha.5 * abundance_covariate_5_linear[s, 1] + alpha.6 * abundance_covariate_6_linear[s, 1] + alpha.1sq * abundance_covariate_1_quadratic[s, 1] + alpha.2sq * abundance_covariate_2_quadratic[s, 1] + alpha.3sq * abundance_covariate_3_quadratic[s, 1] + alpha.4sq * abundance_covariate_4_quadratic[s, 1] + alpha.5sq * abundance_covariate_5_quadratic[s, 1] + alpha.6sq * abundance_covariate_6_quadratic[s, 1] 
+    logit(occu[s]) <- logit_occu[s]
+      
+    True_occ[s] ~ dbern(occu[s])
+  }
+
+  # Observation model
+  for (i in 1:nobservations) {
+    logit_p_fixed[i] <- beta.0 * detection_covariate_0[i] + beta.1 * detection_covariate_1[i] + beta.2 * detection_covariate_2[i] + beta.3 * detection_covariate_3[i] + beta.4 * detection_covariate_4[i] 
+    
+    logit_p_random[i] <- u.observer[observers[i]]
+    
+    logit_p[i] <- logit_p_fixed[i] + logit_p_random[i]
+    
+    logit(p[i]) <- logit_p[i]
+    mu_p[i] <- True_occ[observation_sites[i]] * p[i]
+    observed_o[i] ~ dbern(mu_p[i])
+  }
+}
