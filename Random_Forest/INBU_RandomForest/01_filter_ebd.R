@@ -7,7 +7,11 @@ library(tidyverse)
 select <- dplyr::select
 
 # setup data directory
-dir.create("inbu_data", showWarnings = FALSE)
+dir.create("Random_Forest/inbu_data", showWarnings = FALSE)
+
+## This is the ENTIRE ebd ## 
+## Far too big to put on GitHub. 
+##I keep it stored on an external hard drive and replace it as it is updated.
 
 ebd <- auk_ebd("F:/ebd_relSep-2019.txt",
                file_sampling = "F:/ebd_sampling_relSep-2019.txt")
@@ -25,7 +29,7 @@ ebd_filters
 
 
 # output files
-data_dir <- "inbu_data"
+data_dir <- "Random_Forest/Random_Forest/inbu_data"
 if (!dir.exists(data_dir)) {
   dir.create(data_dir)
 }
@@ -89,4 +93,4 @@ ebird <- ebd_zf_filtered %>%
          time_observations_started, 
          duration_minutes, effort_distance_km,
          number_observers)
-write_csv(ebird, "inbu_data/ebd_inbu_zf.csv", na = "")
+write_csv(ebird, "Random_Forest/inbu_data/ebd_inbu_zf.csv", na = "")

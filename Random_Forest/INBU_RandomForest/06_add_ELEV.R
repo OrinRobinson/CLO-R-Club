@@ -6,7 +6,7 @@ library(viridis)
 library(tidyverse)
 
 
-bcr <- read_sf("inbu_data/gis-data.gpkg", "bcr") %>% 
+bcr <- read_sf("Random_Forest/inbu_data/gis-data.gpkg", "bcr") %>% 
   filter(bcr_code == 27) %>%
   # project to the native modis projectin
   st_transform(crs = paste("+proj=sinu +lon_0=0 +x_0=0 +y_0=0",
@@ -22,7 +22,7 @@ r <- bcr %>%
   rasterize(r, field = 1) %>% 
   # remove any empty cells at edges
   trim()
-r <- writeRaster(r, filename = "inbu_data/prediction-surface.tif", overwrite = TRUE)
+r <- writeRaster(r, filename = "Random_Forest/inbu_data/prediction-surface.tif", overwrite = TRUE)
 
 
 
@@ -67,7 +67,7 @@ pland_coords <- st_transform(r_centers, crs = 4326) %>%
   inner_join(pland_pred, by = "id")
 
 
-elev <- raster("inbu_data/elevation_1KMmd_GMTEDmd.tif")
+elev <- raster("Random_Forest/inbu_data/elevation_1KMmd_GMTEDmd.tif")
 # crop, buffer bcr by 10 km to provide a little wiggly room
 elev <- bcr %>% 
   st_buffer(dist = 10000) %>% 
@@ -107,9 +107,9 @@ elev_pred <- velox(elev)$extract(r_cells, df = TRUE) %>%
             elevation_sd = sd(elevation, na.rm = TRUE))
 
 pland_elev_checklist <- inner_join(pland, elev_checklists, by = "locality_id")
-write_csv(pland_elev_checklist, "inbu_data/pland-elev_location-year.csv")
+write_csv(pland_elev_checklist, "Random_Forest/inbu_data/pland-elev_location-year.csv")
 
 # prediction surface covariates
 pland_elev_pred <- inner_join(pland_coords, elev_pred, by = "id")
-write_csv(pland_elev_pred, "inbu_data/pland-elev_prediction-surface.csv")
+write_csv(pland_elev_pred, "Random_Forest/inbu_data/pland-elev_prediction-surface.csv")
 glimpse(pland_elev_pred)
