@@ -3,7 +3,7 @@
 library(rjags)
 library(dplyr)
 
-load("RWBL_occ_demo_JAGS.dat")
+load("Occupancy_Erica_Stuber/RWBL_occ_demo_JAGS.dat")
 names(dat_long)
 head(dat_long)
 
@@ -313,7 +313,7 @@ head(dat_long)
     # initialize JAGS
     # this is a warm-up period for MCMC models where it tries different kinds of sampling procedures so it can be more efficient in the 'real' model run
     jags_model = jags.model(
-      file = "jags_all_sq_poly_occur.txt", #this is your model file
+      file = "Occupancy_Erica_Stuber/jags_all_sq_poly_occur.txt", #this is your model file
       data = jags_data,
       inits = jags_inits,
       n.chains = 1,

@@ -9,7 +9,7 @@ setwd("C:/Users/meep/Desktop/")
 
 
 # load data
-upsa_occ <- read.csv(file="upsa_occ_demo.csv", sep=",", header=TRUE)
+upsa_occ <- read.csv(file="Occupancy_Erica_Stuber/UPSA_occ_demo.csv", sep=",", header=TRUE)
 str(upsa_occ) # examine the data
 
 # load library
