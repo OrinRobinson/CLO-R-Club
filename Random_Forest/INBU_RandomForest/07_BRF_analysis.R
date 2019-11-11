@@ -19,24 +19,41 @@ map <- purrr::map
 set.seed(1)
 
 # setup output directory for saved results
+<<<<<<< HEAD
+if (!dir.exists("inbu_output")) {
+  dir.create("inbu_output")
+}
+
+# ebird data
+ebird <- read_csv("inbu_data/ebd_inbu_zf.csv") %>% 
+=======
 if (!dir.exists("Random_Forest/inbu_output")) {
   dir.create("Random_Forest/inbu_output")
 }
 
 # ebird data
 ebird <- read_csv("Random_Forest/inbu_data/ebd_inbu_zf.csv") %>% 
+>>>>>>> ac34e9ed6a230a245ed9aa2c01e1299a1a40555f
   # year required to join to habitat data
   mutate(year = year(observation_date))
 
 # modis habitat covariates
+<<<<<<< HEAD
+habitat <- read_csv("inbu_data/pland-elev_location-year.csv") %>% 
+=======
 habitat <- read_csv("Random_Forest/inbu_data/pland-elev_location-year.csv") %>% 
+>>>>>>> ac34e9ed6a230a245ed9aa2c01e1299a1a40555f
   mutate(year = as.integer(year))
 
 # combine ebird and habitat data
 ebird_habitat <- inner_join(ebird, habitat, by = c("locality_id", "year"))
 
 # optional checklist calibration index
+<<<<<<< HEAD
+# cci_file <- "inbu_data/cci_june_bcr27.csv"
+=======
 # cci_file <- "Random_Forest/Random_Forest/inbu_data/cci_june_bcr27.csv"
+>>>>>>> ac34e9ed6a230a245ed9aa2c01e1299a1a40555f
 # if (file.exists(cci_file)) {
 #   cci <- read_csv(cci_file)
 #   ebird_habitat <- inner_join(ebird_habitat, cci, by = "checklist_id") %>%
@@ -44,6 +61,25 @@ ebird_habitat <- inner_join(ebird, habitat, by = c("locality_id", "year"))
 # }
 
 # prediction surface
+<<<<<<< HEAD
+pred_surface <- read_csv("inbu_data/pland-elev_prediction-surface.csv")
+# latest year of landcover data
+max_lc_year <- pred_surface$year[1]
+r <- raster("inbu_data/prediction-surface.tif")
+
+# load gis data for making maps
+map_proj <- st_crs(102003)
+ne_land <- read_sf("inbu_data/gis-data.gpkg", "ne_land") %>% 
+  st_transform(crs = map_proj) %>% 
+  st_geometry()
+bcr <- read_sf("inbu_data/gis-data.gpkg", "bcr") %>% 
+  st_transform(crs = map_proj) %>% 
+  st_geometry()
+ne_country_lines <- read_sf("inbu_data/gis-data.gpkg", "ne_country_lines") %>% 
+  st_transform(crs = map_proj) %>% 
+  st_geometry()
+ne_state_lines <- read_sf("inbu_data/gis-data.gpkg", "ne_state_lines") %>% 
+=======
 pred_surface <- read_csv("Random_Forest/inbu_data/pland-elev_prediction-surface.csv")
 # latest year of landcover data
 max_lc_year <- pred_surface$year[1]
@@ -61,6 +97,7 @@ ne_country_lines <- read_sf("Random_Forest/inbu_data/gis-data.gpkg", "ne_country
   st_transform(crs = map_proj) %>% 
   st_geometry()
 ne_state_lines <- read_sf("Random_Forest/inbu_data/gis-data.gpkg", "ne_state_lines") %>% 
+>>>>>>> ac34e9ed6a230a245ed9aa2c01e1299a1a40555f
   st_transform(crs = map_proj) %>% 
   st_geometry()
 
@@ -356,7 +393,11 @@ r_pred <- pred_er %>%
 r_pred <- r_pred[[-1]]
 
 # save the raster
+<<<<<<< HEAD
+tif_dir <- "inbu_output"
+=======
 tif_dir <- "Random_Forest/inbu_output"
+>>>>>>> ac34e9ed6a230a245ed9aa2c01e1299a1a40555f
 if (!dir.exists(tif_dir)) {
   dir.create(tif_dir)
 }
@@ -384,7 +425,11 @@ plot(r_pred_proj,
      legend = FALSE, add = TRUE)
 
 # borders
+<<<<<<< HEAD
+#plot(bcr, border = "#000000", col = NA, lwd = 1, add = TRUE)
+=======
 plot(bcr, border = "#000000", col = NA, lwd = 1, add = TRUE)
+>>>>>>> ac34e9ed6a230a245ed9aa2c01e1299a1a40555f
 plot(ne_state_lines, col = "#ffffff", lwd = 0.75, add = TRUE)
 plot(ne_country_lines, col = "#ffffff", lwd = 1.5, add = TRUE)
 box()

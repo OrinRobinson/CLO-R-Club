@@ -10,12 +10,20 @@ select <- dplyr::select
 projection <- raster::projection
 
 
+<<<<<<< HEAD
+ebird <- read_csv("inbu_data/ebd_inbu_zf.csv") %>% 
+=======
 ebird <- read_csv("Random_Forest/inbu_data/ebd_inbu_zf.csv") %>% 
+>>>>>>> ac34e9ed6a230a245ed9aa2c01e1299a1a40555f
   mutate(observation_date = as.Date(observation_date))
 
 
 # load the landcover data
+<<<<<<< HEAD
+landcover <- list.files("inbu_data/modis", "^modis_mcd12q1_umd", 
+=======
 landcover <- list.files("Random_Forest/inbu_data/modis", "^modis_mcd12q1_umd", 
+>>>>>>> ac34e9ed6a230a245ed9aa2c01e1299a1a40555f
                         full.names = TRUE) %>% 
   stack()
 # label layers with year
@@ -87,4 +95,8 @@ pland <- pland %>%
               values_fill = list(pland = 0))
 
 # save
+<<<<<<< HEAD
+write_csv(pland, "inbu_data/modis_pland_location-year.csv")
+=======
 write_csv(pland, "Random_Forest/inbu_data/modis_pland_location-year.csv")
+>>>>>>> ac34e9ed6a230a245ed9aa2c01e1299a1a40555f

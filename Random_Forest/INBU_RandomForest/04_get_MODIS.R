@@ -10,13 +10,21 @@ select <- dplyr::select
 projection <- raster::projection
 
 
+<<<<<<< HEAD
+bcr <- read_sf("inbu_data/gis-data.gpkg", "bcr") %>% 
+=======
 bcr <- read_sf("Random_Forest/inbu_data/gis-data.gpkg", "bcr") %>% 
+>>>>>>> ac34e9ed6a230a245ed9aa2c01e1299a1a40555f
   filter(bcr_code == 27) %>%
   # project to the native modis projectin
   st_transform(crs = paste("+proj=sinu +lon_0=0 +x_0=0 +y_0=0",
                            "+a=6371007.181 +b=6371007.181 +units=m +no_defs"))
 
+<<<<<<< HEAD
+ebird <- read.csv("inbu_data/ebd_inbu_zf.csv") %>% mutate(observation_date = as.Date(observation_date))
+=======
 ebird <- read.csv("Random_Forest/inbu_data/ebd_inbu_zf.csv") %>% mutate(observation_date = as.Date(observation_date))
+>>>>>>> ac34e9ed6a230a245ed9aa2c01e1299a1a40555f
 
 
 tiles <- getTile(bcr)
@@ -33,7 +41,11 @@ end_year <- format(max(ebird$observation_date), "%Y.12.31")
 tifs <- runGdal(product = "MCD12Q1", collection = "006", SDSstring = "01", 
                 extent = bcr %>% st_buffer(dist = 10000), 
                 begin = begin_year, end = end_year, 
+<<<<<<< HEAD
+                outDirPath = "inbu_data", job = "modis") %>% 
+=======
                 outDirPath = "Random_Forest/inbu_data", job = "modis") %>% 
+>>>>>>> ac34e9ed6a230a245ed9aa2c01e1299a1a40555f
   pluck("MCD12Q1.006") %>% 
   unlist()
 

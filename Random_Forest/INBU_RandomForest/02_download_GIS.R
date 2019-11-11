@@ -4,7 +4,11 @@ library(rnaturalearth)
 library(dplyr)
 
 # file to save spatial data
+<<<<<<< HEAD
+gpkg_dir <- "data"
+=======
 gpkg_dir <- "Random_Forest/inbu_data"
+>>>>>>> ac34e9ed6a230a245ed9aa2c01e1299a1a40555f
 if (!dir.exists(gpkg_dir)) {
   dir.create(gpkg_dir)
 }

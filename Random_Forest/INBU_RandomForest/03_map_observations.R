@@ -4,6 +4,22 @@ library(rnaturalearth)
 library(dplyr)
 library(readr)
 
+<<<<<<< HEAD
+ebird <- read.csv("inbu_data/ebd_inbu_zf.csv")
+
+# load and project gis data
+map_proj <- st_crs(102003)
+ne_land <- read_sf("inbu_data/gis-data.gpkg", "ne_land") %>% 
+  st_transform(crs = map_proj) %>% 
+  st_geometry()
+bcr <- read_sf("inbu_data/gis-data.gpkg", "bcr") %>% 
+  st_transform(crs = map_proj) %>% 
+  st_geometry()
+ne_country_lines <- read_sf("inbu_data/gis-data.gpkg", "ne_country_lines") %>% 
+  st_transform(crs = map_proj) %>% 
+  st_geometry()
+ne_state_lines <- read_sf("inbu_data/gis-data.gpkg", "ne_state_lines") %>% 
+=======
 ebird <- read.csv("Random_Forest/inbu_data/ebd_inbu_zf.csv")
 
 # load and project gis data
@@ -18,6 +34,7 @@ ne_country_lines <- read_sf("Random_Forest/inbu_data/gis-data.gpkg", "ne_country
   st_transform(crs = map_proj) %>% 
   st_geometry()
 ne_state_lines <- read_sf("Random_Forest/inbu_data/gis-data.gpkg", "ne_state_lines") %>% 
+>>>>>>> ac34e9ed6a230a245ed9aa2c01e1299a1a40555f
   st_transform(crs = map_proj) %>% 
   st_geometry()
 
